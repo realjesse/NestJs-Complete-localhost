@@ -1,0 +1,25 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Streaming Viewer</title>
+  </head>
+  <body>
+    <h1>Live Stream</h1>
+    <ul id="stream"></ul>
+    <script>
+      const source = new EventSource("http://localhost:3000/stream");
+      source.onmessage = function (event) {
+        const list = document.getElementById("stream");
+        const item = document.createElement("li");
+
+        item.textContent = event.data;
+        list.appendChild(item);
+      };
+
+      source.onerror = function (err) {
+        console.log("SSE error", err);
+      };
+    </script>
+  </body>
+</html>
